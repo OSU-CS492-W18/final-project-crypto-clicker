@@ -16,9 +16,19 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
+        android:id="@+id/bt_intent_upgrade"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Upgrades"
-        android:onClick="goUpgrades"/>
+        android:onClick="goUpgrades"
+        app:layout_constraintLeft_toRightOf="parent" />
+
+    <Button
+        android:id="@+id/bt_intent_invest"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Invest"
+        android:onClick="goInvest"
+        app:layout_constraintLeft_toRightOf="@+id/bt_intent_upgrade"/>
 
 </android.support.constraint.ConstraintLayout>
