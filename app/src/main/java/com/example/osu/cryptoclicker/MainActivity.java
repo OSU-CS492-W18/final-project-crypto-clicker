@@ -4,9 +4,11 @@ import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 
 public class MainActivity extends AppCompatActivity {
+    private final static String TAG = "MainActivity";
 
     private SQLiteDatabase mDB;
 
@@ -17,6 +19,10 @@ public class MainActivity extends AppCompatActivity {
 
         ClickerDBHelper dbHelper = new ClickerDBHelper(this);
         mDB = dbHelper.getWritableDatabase();
+
+        Player player = new Player(mDB);
+        Log.d(TAG, String.valueOf(player.getCurrency(CoinBaseUtils.USD)));
+        Log.d(TAG, String.valueOf(player.getCurrency(CoinBaseUtils.BITCOIN)));
     }
 
     public void goUpgrades(View v){
