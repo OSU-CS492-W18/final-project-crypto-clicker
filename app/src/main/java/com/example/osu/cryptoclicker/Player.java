@@ -1,0 +1,40 @@
+package com.example.osu.cryptoclicker;
+
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
+
+import java.util.HashMap;
+import java.util.Map;
+
+/**
+ * Created by aruef on 3/12/2018.
+ */
+
+public class Player {
+
+    private Map<String, Double> currency;
+    private int upgrade = 1;
+
+    public Player(SQLiteDatabase db){
+        currency = new HashMap<String, Double>();
+
+        //User will have ID of 1
+        Cursor cursor = db.query(ClickerContract.UserData.TABLE_NAME,
+                new String[] {ClickerContract.UserData.COLUMN_UPGRADE,
+                        ClickerContract.UserData.COLUMN_USD,
+                        ClickerContract.UserData.COLUMN_BITCOIN},
+                ClickerContract.UserData._ID + "=?",
+                new String[] {"1"},
+                null, null, null);
+
+        cursor.moveToFirst();
+        upgrade = cursor.getInt(0);
+        currency.put(CoinBaseUtils.USD, cursor.getDouble(1));
+        currency.put(CoinBaseUtils.BITCOIN, cursor.getDouble(2));
+    }
+
+    public double getCurrency(String reqCurrency){
+        return currency.get(reqCurrency);
+    }
+}
