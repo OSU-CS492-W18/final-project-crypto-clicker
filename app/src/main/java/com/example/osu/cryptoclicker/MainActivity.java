@@ -21,6 +21,7 @@ public class MainActivity extends AppCompatActivity {
         mDB = dbHelper.getWritableDatabase();
 
         Player player = new Player(mDB);
+        player.setCurrency(ClickerContract.UserData.COLUMN_BITCOIN, 75.0);
         Log.d(TAG, String.valueOf(player.getCurrency(CoinBaseUtils.USD)));
         Log.d(TAG, String.valueOf(player.getCurrency(CoinBaseUtils.BITCOIN)));
     }
