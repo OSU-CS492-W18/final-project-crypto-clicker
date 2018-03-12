@@ -27,6 +27,14 @@ public class ClickerDBHelper extends SQLiteOpenHelper {
                         ClickerContract.UserData.COLUMN_BITCOIN + " FLOAT " +
                         ");";
         db.execSQL(SQL_CREATE_TABLE);
+
+        final String SQL_USER_INSERT =
+                "INSERT INTO " + ClickerContract.UserData.TABLE_NAME + "(" +
+                        ClickerContract.UserData.COLUMN_UPGRADE + ", " +
+                        ClickerContract.UserData.COLUMN_USD + ", " +
+                        ClickerContract.UserData.COLUMN_BITCOIN + ") VALUES (" +
+                        "0, 0.00, 0.00);";
+        db.execSQL(SQL_USER_INSERT);
     }
 
     @Override
