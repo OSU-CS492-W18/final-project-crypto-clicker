@@ -17,4 +17,9 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(this, UpgradeController.class);
         startActivity(intent);
     }
+
+    public void goInvest(View v){
+        Intent intent = new Intent(this, InvestController.class);
+        startActivity(intent);
+    }
 }
