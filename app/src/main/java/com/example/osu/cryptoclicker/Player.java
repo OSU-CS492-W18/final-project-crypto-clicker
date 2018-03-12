@@ -15,9 +15,11 @@ public class Player {
 
     private Map<String, Double> currency;
     private int upgrade = 1;
+    private SQLiteDatabase mDB;
 
     public Player(SQLiteDatabase db){
         currency = new HashMap<String, Double>();
+        mDB = db;
 
         //User will have ID of 1
         Cursor cursor = db.query(ClickerContract.UserData.TABLE_NAME,
@@ -36,5 +38,11 @@ public class Player {
 
     public double getCurrency(String reqCurrency){
         return currency.get(reqCurrency);
+    }
+
+    public void setCurrency(String reqCurrency, double value){
+        currency.put(reqCurrency, value);
+
+        ClickerDBHelper.updateCurrency(mDB, reqCurrency, value);
     }
 }
