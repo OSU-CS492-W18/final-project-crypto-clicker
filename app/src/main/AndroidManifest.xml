@@ -16,7 +16,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".UpgradeController"></activity>
+        <activity android:name=".UpgradeController" />
+        <activity android:name=".InvestController"></activity>
     </application>
 
 </manifest>
