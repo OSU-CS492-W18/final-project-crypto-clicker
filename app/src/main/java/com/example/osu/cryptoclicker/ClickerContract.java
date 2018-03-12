@@ -12,8 +12,8 @@ public class ClickerContract {
     public static class UserData implements BaseColumns{
         public static final String TABLE_NAME = "userData";
         public static final String COLUMN_UPGRADE = "upgrade";
-        public static final String COLUMN_USD = "usd";
-        public static final String COLUMN_BITCOIN = "bitcoin";
+        public static final String COLUMN_USD = CoinBaseUtils.USD;
+        public static final String COLUMN_BITCOIN = CoinBaseUtils.BITCOIN;
         //more currency columns
     }
 }
