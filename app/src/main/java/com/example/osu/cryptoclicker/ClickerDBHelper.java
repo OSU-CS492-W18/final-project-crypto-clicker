@@ -28,6 +28,7 @@ public class ClickerDBHelper extends SQLiteOpenHelper {
                         ");";
         db.execSQL(SQL_CREATE_TABLE);
 
+        //insert initial user values on create
         final String SQL_USER_INSERT =
                 "INSERT INTO " + ClickerContract.UserData.TABLE_NAME + "(" +
                         ClickerContract.UserData.COLUMN_UPGRADE + ", " +
@@ -41,5 +42,14 @@ public class ClickerDBHelper extends SQLiteOpenHelper {
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL("DROP TABLE IF EXISTS " + ClickerContract.UserData.TABLE_NAME + ";");
         onCreate(db);
+    }
+
+    //static method for easy updating of DB
+    public static void updateCurrency(SQLiteDatabase db, String column, double value){
+        final String SQL_UPDATE =
+                "UPDATE " + ClickerContract.UserData.TABLE_NAME + " SET " +
+                        column + " = " + String.valueOf(value) + " WHERE " +
+                        ClickerContract.UserData._ID + " = 1;";
+        db.execSQL(SQL_UPDATE);
     }
 }
