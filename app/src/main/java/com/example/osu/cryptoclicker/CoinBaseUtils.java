@@ -1,6 +1,10 @@
 package com.example.osu.cryptoclicker;
 
+import android.net.ParseException;
 import android.net.Uri;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 /**
  * Created by aruef on 3/12/2018.
@@ -40,6 +44,21 @@ public class CoinBaseUtils {
                 .appendPath(currencyPair)
                 .appendPath(COINBASE_SELL_PRICE_PATH)
                 .toString();
+    }
+
+    public static String parsePriceJSON(String priceJSON)   {
+        try {
+            JSONObject priceObj = new JSONObject(priceJSON);
+            String price = priceObj.getJSONObject("data").getString("amount");
+            return price;
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+            return null;
+        } catch (ParseException e)  {
+            e.printStackTrace();
+            return null;
+        }
     }
 }
 
