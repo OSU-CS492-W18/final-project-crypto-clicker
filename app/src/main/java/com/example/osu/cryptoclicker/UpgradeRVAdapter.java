@@ -32,6 +32,12 @@ public class UpgradeRVAdapter extends RecyclerView.Adapter<UpgradeRVAdapter.View
             mTVRight.setOnClickListener(this);
         }
 
+        //parameters need to change
+        public void bind(String upgradeLeft){
+            mTVLeft.setText(upgradeLeft);
+            //mTVRight.setText(upgradeRight);
+        }
+
         @Override
         public void onClick(View v) {
 
