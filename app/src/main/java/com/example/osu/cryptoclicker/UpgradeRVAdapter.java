@@ -29,7 +29,12 @@ public class UpgradeRVAdapter extends RecyclerView.Adapter<UpgradeRVAdapter.View
     }
 
     public UpgradeRVAdapter(){
-        
+
+    }
+
+    public void updateData(ArrayList<String> data){
+        mUpgrades = data;
+        notifyDataSetChanged();
     }
 
     @NonNull
