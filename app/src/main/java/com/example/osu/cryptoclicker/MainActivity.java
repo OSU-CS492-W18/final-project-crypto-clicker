@@ -22,8 +22,8 @@ public class MainActivity extends AppCompatActivity {
 
         Player player = new Player(mDB);
         player.setCurrency(ClickerContract.UserData.COLUMN_BITCOIN, 75.0);
-        Log.d(TAG, String.valueOf(player.getCurrency(CoinBaseUtils.USD)));
-        Log.d(TAG, String.valueOf(player.getCurrency(CoinBaseUtils.BITCOIN)));
+        Log.d(TAG, String.valueOf(player.getCurrency(CoinBaseUtils.COINBASE_CURRENCY_USD)));
+        Log.d(TAG, String.valueOf(player.getCurrency(CoinBaseUtils.COINBASE_CURRENCY_BTC)));
     }
 
     public void goUpgrades(View v){

@@ -14,7 +14,7 @@ import java.util.Map;
 public class Player {
 
     private Map<String, Double> currency;
-    private int upgrade = 1;
+    private int upgrade;
     private SQLiteDatabase mDB;
 
     public Player(SQLiteDatabase db){
@@ -32,12 +32,12 @@ public class Player {
 
         cursor.moveToFirst();
         upgrade = cursor.getInt(0);
-        currency.put(CoinBaseUtils.USD, cursor.getDouble(1));
-        currency.put(CoinBaseUtils.BITCOIN, cursor.getDouble(2));
+        currency.put(CoinBaseUtils.COINBASE_CURRENCY_USD, cursor.getDouble(1));
+        currency.put(CoinBaseUtils.COINBASE_CURRENCY_BTC, cursor.getDouble(2));
     }
 
     public double getCurrency(String reqCurrency){
-        return currency.get(reqCurrency);
+        return currency.containsKey(reqCurrency) ? currency.get(reqCurrency) : 0.;
     }
 
     public void setCurrency(String reqCurrency, double value){
