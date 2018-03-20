@@ -12,18 +12,15 @@ import org.json.JSONObject;
 
 public class CoinBaseUtils {
 
-    public final static String USD = "usd";
-    public final static String BITCOIN = "bitcoin";
-
     //url builders
     private final static String COINBASE_BASE_URL = "https://api.coinbase.com/v2/prices";
     private final static String COINBASE_BUY_PRICE_PATH = "buy";
     private final static String COINBASE_SELL_PRICE_PATH = "sell";
-    private final static String COINBASE_CURRENCY_BTC = "btc";
-    private final static String COINBASE_CURRENCY_ETH = "eth";
-    private final static String COINBASE_CURRENCY_BCH = "bch";
-    private final static String COINBASE_CURRENCY_LTC = "ltc";
-    private final static String COINBASE_CURRENCY_USD = "usd";
+    public final static String COINBASE_CURRENCY_BTC = "btc";
+    public final static String COINBASE_CURRENCY_ETH = "eth";
+    public final static String COINBASE_CURRENCY_BCH = "bch";
+    public final static String COINBASE_CURRENCY_LTC = "ltc";
+    public final static String COINBASE_CURRENCY_USD = "usd";
 
     //this function returns the buying price of a given crypto currency
     public static String buildBuyUrl()    {
