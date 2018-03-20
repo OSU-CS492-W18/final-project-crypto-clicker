@@ -50,6 +50,10 @@ public class UpgradeRVAdapter extends RecyclerView.Adapter<UpgradeRVAdapter.View
 
     @Override
     public int getItemCount() {
-        return 0;
+        if(mUpgrades != null){
+            return mUpgrades.size();
+        } else {
+            return 0;
+        }
     }
 }
