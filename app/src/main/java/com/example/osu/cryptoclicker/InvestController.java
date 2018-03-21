@@ -1,5 +1,7 @@
 package com.example.osu.cryptoclicker;
 
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -11,6 +13,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -32,6 +35,13 @@ public class InvestController extends AppCompatActivity
     private TextView mSellPriceTV;
     private TextView mBuyPriceTV;
     private TextView mLoadingError;
+    private TextView mUSDBalanceTV;
+    private TextView mBTCBalanceTV;
+
+    private SQLiteDatabase mDB;
+
+    private float mUSDbalance;
+    private float mBTCbalance;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,9 +51,34 @@ public class InvestController extends AppCompatActivity
         mSellPriceTV = (TextView)findViewById(R.id.sell_price_tv);
         mBuyPriceTV = (TextView)findViewById(R.id.buy_price_tv);
 
+        mUSDBalanceTV = (TextView)findViewById(R.id.usd_balance_tv);
+        mBTCBalanceTV = (TextView)findViewById(R.id.btc_balance_tv);
+
         mLoadingError = (TextView)findViewById(R.id.tv_loading_error);
         mProgressBar = (ProgressBar)findViewById(R.id.pb_loading_bar_invest);
+
+        ClickerDBHelper dbHelper = new ClickerDBHelper(this);
+        mDB = dbHelper.getReadableDatabase();
+
+        Button buyButton = (Button)findViewById(R.id.bt_buy);
+        buyButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
+        Button sellButton = (Button)findViewById(R.id.bt_sell);
+        sellButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
+
         getPricesData();
+        updateBalance();
     }
 
     @Override
@@ -71,6 +106,27 @@ public class InvestController extends AppCompatActivity
         args.putString(BUY_URL_KEY, buyPriceURL);
         mProgressBar.setVisibility(View.VISIBLE);
         getSupportLoaderManager().restartLoader(INVEST_LOADER_ID, args, this);
+    }
+
+    private void updateBalance() {
+        Cursor cursor = mDB.query(
+                ClickerContract.UserData.TABLE_NAME,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null
+        );
+
+        while (cursor.moveToNext()) {
+            mUSDbalance = cursor.getFloat(cursor.getColumnIndex(ClickerContract.UserData.COLUMN_USD));
+            mBTCbalance = cursor.getFloat(cursor.getColumnIndex(ClickerContract.UserData.COLUMN_BITCOIN));
+
+            mUSDBalanceTV.setText("USD Balance: $" + mUSDbalance);
+            mBTCBalanceTV.setText("BTC Balance: " + mBTCbalance);
+        }
+        cursor.close();
     }
 
     @NonNull
