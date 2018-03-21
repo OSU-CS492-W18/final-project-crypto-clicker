@@ -30,6 +30,12 @@ public class MainActivity extends AppCompatActivity {
         mPlayer = new Player(mDB);
     }
 
+    @Override
+    protected void onResume()  {
+        super.onResume();
+        mPlayer.updateCurrency();
+    }
+
     public void goUpgrades(View v){
         Intent intent = new Intent(this, UpgradeController.class);
         startActivity(intent);
