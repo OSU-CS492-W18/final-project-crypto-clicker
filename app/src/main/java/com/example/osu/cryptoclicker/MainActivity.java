@@ -6,24 +6,28 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
     private final static String TAG = "MainActivity";
 
     private SQLiteDatabase mDB;
+    private Player mPlayer;
+
+    private TextView mTVStatus;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        mTVStatus = findViewById(R.id.tv_status);
+        mTVStatus.setOnClickListener(mSceneClickListener);
+
         ClickerDBHelper dbHelper = new ClickerDBHelper(this);
         mDB = dbHelper.getWritableDatabase();
 
-        Player player = new Player(mDB);
-        player.setCurrency(ClickerContract.UserData.COLUMN_BITCOIN, 75.0);
-        Log.d(TAG, String.valueOf(player.getCurrency(CoinBaseUtils.USD)));
-        Log.d(TAG, String.valueOf(player.getCurrency(CoinBaseUtils.BITCOIN)));
+        mPlayer = new Player(mDB);
     }
 
     public void goUpgrades(View v){
@@ -35,4 +39,15 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(this, InvestController.class);
         startActivity(intent);
     }
+
+    private View.OnClickListener mSceneClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            mPlayer.click();
+
+            String text = CoinBaseUtils.COINBASE_CURRENCY_USD + ": " +
+                    String.valueOf(mPlayer.getCurrency(CoinBaseUtils.COINBASE_CURRENCY_USD));
+            mTVStatus.setText(text);
+        }
+    };
 }

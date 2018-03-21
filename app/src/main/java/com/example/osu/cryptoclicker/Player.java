@@ -13,8 +13,12 @@ import java.util.Map;
 
 public class Player {
 
+    private final static double BASE_CLICK = .5;
+
     private Map<String, Double> currency;
-    private int upgrade = 1;
+    private int upgrade;
+    private double currClickAmount;
+
     private SQLiteDatabase mDB;
 
     public Player(SQLiteDatabase db){
@@ -32,17 +36,36 @@ public class Player {
 
         cursor.moveToFirst();
         upgrade = cursor.getInt(0);
-        currency.put(CoinBaseUtils.USD, cursor.getDouble(1));
-        currency.put(CoinBaseUtils.BITCOIN, cursor.getDouble(2));
+        currency.put(CoinBaseUtils.COINBASE_CURRENCY_USD, cursor.getDouble(1));
+        currency.put(CoinBaseUtils.COINBASE_CURRENCY_BTC, cursor.getDouble(2));
+        currClickAmount = calcClickAmount();
     }
 
     public double getCurrency(String reqCurrency){
-        return currency.get(reqCurrency);
+        return currency.containsKey(reqCurrency) ? currency.get(reqCurrency) : 0.;
     }
 
     public void setCurrency(String reqCurrency, double value){
         currency.put(reqCurrency, value);
 
         ClickerDBHelper.updateCurrency(mDB, reqCurrency, value);
+    }
+
+    public int getUpgrade(){
+        return upgrade;
+    }
+
+    public void setUpgrade(int upgrade){
+        this.upgrade = upgrade;
+        currClickAmount = calcClickAmount();
+    }
+
+    private double calcClickAmount(){
+        return BASE_CLICK*(1 + upgrade*.5);
+    }
+
+    public void click(){
+        setCurrency(CoinBaseUtils.COINBASE_CURRENCY_USD,
+                getCurrency(CoinBaseUtils.COINBASE_CURRENCY_USD) + currClickAmount);
     }
 }
