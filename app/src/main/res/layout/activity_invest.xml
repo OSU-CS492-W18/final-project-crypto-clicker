@@ -14,19 +14,41 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Currency BTC"/>
+            android:text="BTC"
+            android:textSize="25sp"
+            android:paddingVertical="8dp"
+            android:paddingHorizontal="16dp"
+            android:textColor="#000"
+            />
 
         <TextView
             android:id="@+id/sell_price_tv"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:textSize="20sp"
+            android:paddingVertical="8dp"
+            android:paddingHorizontal="16dp"
+            android:textColor="#000"
             />
 
         <TextView
             android:id="@+id/buy_price_tv"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:textSize="20sp"
+            android:paddingVertical="8dp"
+            android:paddingHorizontal="16dp"
+            android:textColor="#000"
             />
+
+        <TextView
+            android:id="@+id/tv_loading_error"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="20sp"
+            android:padding="16dp"
+            android:text="@string/network_error"
+            android:visibility="invisible"/>
 
         <ProgressBar
             android:id="@+id/pb_loading_bar_invest"

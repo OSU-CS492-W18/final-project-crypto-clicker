@@ -14,6 +14,11 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
+
+//TODO: add menu item to refresh the page
+//TODO: present the current balance in usd and btc
+//TODO: do the logic of buying and selling btc
+
 public class InvestController extends AppCompatActivity
         implements LoaderCallbacks<ArrayList<String>>{
 
@@ -25,6 +30,7 @@ public class InvestController extends AppCompatActivity
 
     private TextView mSellPriceTV;
     private TextView mBuyPriceTV;
+    private TextView mLoadingError;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +40,7 @@ public class InvestController extends AppCompatActivity
         mSellPriceTV = (TextView)findViewById(R.id.sell_price_tv);
         mBuyPriceTV = (TextView)findViewById(R.id.buy_price_tv);
 
+        mLoadingError = (TextView)findViewById(R.id.tv_loading_error);
         mProgressBar = (ProgressBar)findViewById(R.id.pb_loading_bar_invest);
         getPricesData();
     }
@@ -62,15 +69,17 @@ public class InvestController extends AppCompatActivity
 
     @Override
     public void onLoadFinished(@NonNull Loader<ArrayList<String>> loader, ArrayList<String> data) {
-        mProgressBar.setVisibility(View.VISIBLE);
-        if(data!=null)  {
-            String sellPrice = "Sell price: " + data.get(0);
-            String buyPrice =  "Buy price: " + data.get(1);
+        mProgressBar.setVisibility(View.INVISIBLE);
+        if(data.get(0) != null && data.get(1) != null)  {
+            String sellPrice = getString(R.string.sell_price) + CoinBaseUtils.parsePriceJSON(data.get(0));
+            String buyPrice =  getString(R.string.buy_price) + CoinBaseUtils.parsePriceJSON(data.get(1));
             mSellPriceTV.setText(sellPrice);
             mBuyPriceTV.setText(buyPrice);
+            mProgressBar.setVisibility(View.INVISIBLE);
+            mLoadingError.setVisibility(View.INVISIBLE);
         }
         else {
-            //do error message
+            mLoadingError.setVisibility(View.VISIBLE);
         }
     }
 
