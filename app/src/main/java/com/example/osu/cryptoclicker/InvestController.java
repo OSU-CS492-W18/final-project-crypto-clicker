@@ -42,8 +42,8 @@ public class InvestController extends AppCompatActivity
 
     private SQLiteDatabase mDB;
 
-    private double mUSDbalance;
-    private double mBTCbalance;
+    private double mUSDBalance;
+    private double mBTCBalance;
 
     private double mSellPrice;
     private double mBuyPrice;
@@ -101,31 +101,31 @@ public class InvestController extends AppCompatActivity
 
     private void buyBTC(String amount)  {
         double USDAmount = Double.parseDouble(amount);
-        if(USDAmount > mUSDbalance) {
+        if(USDAmount > mUSDBalance) {
             //cant buy
             return;
         }
         else    {
             Double BTCAmount = USDAmount/mBuyPrice;
-            mUSDbalance -= USDAmount;
-            mBTCbalance += BTCAmount;
-            ClickerDBHelper.updateCurrency(mDB, ClickerContract.UserData.COLUMN_USD, mUSDbalance);
-            ClickerDBHelper.updateCurrency(mDB, ClickerContract.UserData.COLUMN_BITCOIN, mBTCbalance);
+            mUSDBalance -= USDAmount;
+            mBTCBalance += BTCAmount;
+            ClickerDBHelper.updateCurrency(mDB, ClickerContract.UserData.COLUMN_USD, mUSDBalance);
+            ClickerDBHelper.updateCurrency(mDB, ClickerContract.UserData.COLUMN_BITCOIN, mBTCBalance);
         }
     }
 
     private void sellBTC(String amount)  {
         Double BTCAmount = Double.parseDouble(amount);
-        if(BTCAmount > mBTCbalance) {
+        if(BTCAmount > mBTCBalance) {
             //cant buy
             return;
         }
         else    {
             Double USDAmount = BTCAmount*mSellPrice;
-            mUSDbalance += USDAmount;
-            mBTCbalance -= BTCAmount;
-            ClickerDBHelper.updateCurrency(mDB, ClickerContract.UserData.COLUMN_USD, mUSDbalance);
-            ClickerDBHelper.updateCurrency(mDB, ClickerContract.UserData.COLUMN_BITCOIN, mBTCbalance);
+            mUSDBalance += USDAmount;
+            mBTCBalance -= BTCAmount;
+            ClickerDBHelper.updateCurrency(mDB, ClickerContract.UserData.COLUMN_USD, mUSDBalance);
+            ClickerDBHelper.updateCurrency(mDB, ClickerContract.UserData.COLUMN_BITCOIN, mBTCBalance);
         }
     }
 
@@ -168,10 +168,10 @@ public class InvestController extends AppCompatActivity
         );
 
         while (cursor.moveToNext()) {
-            mUSDbalance = cursor.getDouble(cursor.getColumnIndex(ClickerContract.UserData.COLUMN_USD));
-            mBTCbalance = cursor.getDouble(cursor.getColumnIndex(ClickerContract.UserData.COLUMN_BITCOIN));
-            String usd = String.format("%.2f", mUSDbalance);
-            String btc = String.format("%.7f", mBTCbalance);
+            mUSDBalance = cursor.getDouble(cursor.getColumnIndex(ClickerContract.UserData.COLUMN_USD));
+            mBTCBalance = cursor.getDouble(cursor.getColumnIndex(ClickerContract.UserData.COLUMN_BITCOIN));
+            String usd = String.format("%.2f", mUSDBalance);
+            String btc = String.format("%.7f", mBTCBalance);
             mUSDBalanceTV.setText("USD Balance: $" + usd);
             mBTCBalanceTV.setText("BTC Balance: " + btc);
         }
