@@ -68,4 +68,22 @@ public class Player {
         setCurrency(CoinBaseUtils.COINBASE_CURRENCY_USD,
                 getCurrency(CoinBaseUtils.COINBASE_CURRENCY_USD) + currClickAmount);
     }
+
+    public void updateCurrency()    {
+        Cursor cursor = mDB.query(
+                ClickerContract.UserData.TABLE_NAME,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null
+        );
+
+        while (cursor.moveToNext()) {
+            currency.put(CoinBaseUtils.COINBASE_CURRENCY_USD, cursor.getDouble(cursor.getColumnIndex(ClickerContract.UserData.COLUMN_USD)));
+            currency.put(CoinBaseUtils.COINBASE_CURRENCY_BTC, cursor.getDouble(cursor.getColumnIndex(ClickerContract.UserData.COLUMN_BITCOIN)));
+        }
+        cursor.close();
+    }
 }
