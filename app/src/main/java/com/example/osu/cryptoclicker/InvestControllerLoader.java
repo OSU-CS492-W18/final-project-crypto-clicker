@@ -25,8 +25,8 @@ public class InvestControllerLoader extends AsyncTaskLoader<ArrayList<String>> {
 
     @Override
     protected void onStartLoading() {
-        if(mSellPriceURL != null || mBuyPriceURL != null)  {
-            if(mSellPriceJSON!=null || mBuyPriceJSON != null) {
+        if(mSellPriceURL != null && mBuyPriceURL != null)  {
+            if(mSellPriceJSON!=null && mBuyPriceJSON != null) {
                 ArrayList<String> priceListJSON = new ArrayList<String>();
                 priceListJSON.add(mSellPriceJSON);
                 priceListJSON.add(mBuyPriceJSON);
@@ -41,7 +41,7 @@ public class InvestControllerLoader extends AsyncTaskLoader<ArrayList<String>> {
     @Nullable
     @Override
     public ArrayList<String> loadInBackground() {
-        if(mSellPriceURL != null  || mBuyPriceURL != null)   {
+        if(mSellPriceURL != null  && mBuyPriceURL != null)   {
             String sellPriceResult = null;
             String buyPriceResult = null;
             try {
