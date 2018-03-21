@@ -5,4 +5,5 @@
     <string name="sell_price">Selling Price: $</string>
     <string name="buy_price">Buying Price: $</string>
     <string name="network_error">Ops, Failed to get the prices. Check your internet connection</string>
+    <string name="action_refresh">Refresh Prices</string>
 </resources>
