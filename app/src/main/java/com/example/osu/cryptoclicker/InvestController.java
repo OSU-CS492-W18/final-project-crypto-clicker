@@ -10,17 +10,17 @@ import android.support.v4.app.LoaderManager.LoaderCallbacks;
 import android.support.v4.content.Loader;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import java.util.ArrayList;
 
-
-//TODO: present the current balance in usd and btc
 //TODO: do the logic of buying and selling btc
 
 public class InvestController extends AppCompatActivity
@@ -37,11 +37,16 @@ public class InvestController extends AppCompatActivity
     private TextView mLoadingError;
     private TextView mUSDBalanceTV;
     private TextView mBTCBalanceTV;
+    private EditText mUSDAmountET;
+    private EditText mBTCAmountET;
 
     private SQLiteDatabase mDB;
 
-    private float mUSDbalance;
-    private float mBTCbalance;
+    private double mUSDbalance;
+    private double mBTCbalance;
+
+    private double mSellPrice;
+    private double mBuyPrice;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,6 +62,9 @@ public class InvestController extends AppCompatActivity
         mLoadingError = (TextView)findViewById(R.id.tv_loading_error);
         mProgressBar = (ProgressBar)findViewById(R.id.pb_loading_bar_invest);
 
+        mUSDAmountET = (EditText)findViewById(R.id.et_usd_amount);
+        mBTCAmountET = (EditText)findViewById(R.id.et_btc_amount);
+
         ClickerDBHelper dbHelper = new ClickerDBHelper(this);
         mDB = dbHelper.getReadableDatabase();
 
@@ -64,7 +72,12 @@ public class InvestController extends AppCompatActivity
         buyButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                String amount = mUSDAmountET.getText().toString();
+                if(!TextUtils.isEmpty(amount))   {
+                    buyBTC(amount);
+                }
+                mUSDAmountET.setText("");
+                updateBalance();
             }
         });
 
@@ -72,13 +85,48 @@ public class InvestController extends AppCompatActivity
         sellButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                String amount = mBTCAmountET.getText().toString();
+                if(!TextUtils.isEmpty(amount))   {
+                    sellBTC(amount);
+                }
+                mBTCAmountET.setText("");
+                updateBalance();
             }
         });
 
 
         getPricesData();
         updateBalance();
+    }
+
+    private void buyBTC(String amount)  {
+        double USDAmount = Double.parseDouble(amount);
+        if(USDAmount > mUSDbalance) {
+            //cant buy
+            return;
+        }
+        else    {
+            Double BTCAmount = USDAmount/mBuyPrice;
+            mUSDbalance -= USDAmount;
+            mBTCbalance += BTCAmount;
+            ClickerDBHelper.updateCurrency(mDB, ClickerContract.UserData.COLUMN_USD, mUSDbalance);
+            ClickerDBHelper.updateCurrency(mDB, ClickerContract.UserData.COLUMN_BITCOIN, mBTCbalance);
+        }
+    }
+
+    private void sellBTC(String amount)  {
+        Double BTCAmount = Double.parseDouble(amount);
+        if(BTCAmount > mBTCbalance) {
+            //cant buy
+            return;
+        }
+        else    {
+            Double USDAmount = BTCAmount*mSellPrice;
+            mUSDbalance += USDAmount;
+            mBTCbalance -= BTCAmount;
+            ClickerDBHelper.updateCurrency(mDB, ClickerContract.UserData.COLUMN_USD, mUSDbalance);
+            ClickerDBHelper.updateCurrency(mDB, ClickerContract.UserData.COLUMN_BITCOIN, mBTCbalance);
+        }
     }
 
     @Override
@@ -120,11 +168,12 @@ public class InvestController extends AppCompatActivity
         );
 
         while (cursor.moveToNext()) {
-            mUSDbalance = cursor.getFloat(cursor.getColumnIndex(ClickerContract.UserData.COLUMN_USD));
-            mBTCbalance = cursor.getFloat(cursor.getColumnIndex(ClickerContract.UserData.COLUMN_BITCOIN));
-
-            mUSDBalanceTV.setText("USD Balance: $" + mUSDbalance);
-            mBTCBalanceTV.setText("BTC Balance: " + mBTCbalance);
+            mUSDbalance = cursor.getDouble(cursor.getColumnIndex(ClickerContract.UserData.COLUMN_USD));
+            mBTCbalance = cursor.getDouble(cursor.getColumnIndex(ClickerContract.UserData.COLUMN_BITCOIN));
+            String usd = String.format("%.2f", mUSDbalance);
+            String btc = String.format("%.7f", mBTCbalance);
+            mUSDBalanceTV.setText("USD Balance: $" + usd);
+            mBTCBalanceTV.setText("BTC Balance: " + btc);
         }
         cursor.close();
     }
@@ -145,6 +194,10 @@ public class InvestController extends AppCompatActivity
     public void onLoadFinished(@NonNull Loader<ArrayList<String>> loader, ArrayList<String> data) {
         mProgressBar.setVisibility(View.INVISIBLE);
         if(data.get(0) != null && data.get(1) != null)  {
+
+            mSellPrice = Double.parseDouble(CoinBaseUtils.parsePriceJSON(data.get(0)));
+            mBuyPrice = Double.parseDouble(CoinBaseUtils.parsePriceJSON(data.get(1)));
+
             String sellPrice = getString(R.string.sell_price) + CoinBaseUtils.parsePriceJSON(data.get(0));
             String buyPrice =  getString(R.string.buy_price) + CoinBaseUtils.parsePriceJSON(data.get(1));
             mSellPriceTV.setText(sellPrice);

@@ -10,6 +10,7 @@
     <string name="invest">Invest</string>
     <string name="buy">Buy BTC</string>
     <string name="sell">Sell BTC</string>
-    <string name="amount_hint">Enter BTC amount</string>
+    <string name="usd_amount_hint">Enter USD amount</string>
+    <string name="btc_amount_hint">Enter BTC amount</string>
 
 </resources>

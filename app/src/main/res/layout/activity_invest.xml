@@ -99,22 +99,30 @@
             />
 
         <EditText
-            android:id="@+id/et_btc_amount"
+            android:id="@+id/et_usd_amount"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="4dp"
-            android:hint="@string/amount_hint"/>
+            android:hint="@string/usd_amount_hint"
+            android:inputType="number|numberDecimal"/>
 
         <Button
             android:id="@+id/bt_buy"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/buy"
             android:clickable="true"/>
 
+        <EditText
+            android:id="@+id/et_btc_amount"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="4dp"
+            android:hint="@string/btc_amount_hint"
+            android:inputType="number|numberDecimal"/>
         <Button
             android:id="@+id/bt_sell"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/sell"
             android:clickable="true"/>
