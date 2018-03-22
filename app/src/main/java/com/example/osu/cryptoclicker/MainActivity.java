@@ -28,6 +28,8 @@ public class MainActivity extends AppCompatActivity {
         mDB = dbHelper.getWritableDatabase();
 
         mPlayer = new Player(mDB);
+
+        updateScene();
     }
 
     @Override
@@ -62,10 +64,8 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public void onClick(View v) {
             mPlayer.click();
-
-            String text = CoinBaseUtils.COINBASE_CURRENCY_USD + ": " +
-                    String.valueOf(mPlayer.getCurrency(CoinBaseUtils.COINBASE_CURRENCY_USD));
-            mTVStatus.setText(text);
+            
+            updateScene();
         }
     };
 }
