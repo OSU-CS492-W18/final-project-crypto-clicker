@@ -2,12 +2,11 @@ package com.example.osu.cryptoclicker;
 
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.os.AsyncTask;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.app.LoaderManager;
 import android.support.v4.app.LoaderManager.LoaderCallbacks;
 import android.support.v4.content.Loader;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -103,6 +102,7 @@ public class InvestController extends AppCompatActivity
         double USDAmount = Double.parseDouble(amount);
         if(USDAmount > mUSDBalance) {
             //cant buy
+            noSufficientFundsDialog();
             return;
         }
         else    {
@@ -118,6 +118,7 @@ public class InvestController extends AppCompatActivity
         Double BTCAmount = Double.parseDouble(amount);
         if(BTCAmount > mBTCBalance) {
             //cant buy
+            noSufficientFundsDialog();
             return;
         }
         else    {
@@ -127,6 +128,14 @@ public class InvestController extends AppCompatActivity
             ClickerDBHelper.updateCurrency(mDB, ClickerContract.UserData.COLUMN_USD, mUSDBalance);
             ClickerDBHelper.updateCurrency(mDB, ClickerContract.UserData.COLUMN_BITCOIN, mBTCBalance);
         }
+    }
+
+    private void noSufficientFundsDialog()  {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage(R.string.no_money).setTitle("Warning!");
+        builder.setPositiveButton("OK", null);
+        AlertDialog dialog = builder.create();
+        dialog.show();
     }
 
     @Override
