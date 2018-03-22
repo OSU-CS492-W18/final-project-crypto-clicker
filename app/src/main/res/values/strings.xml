@@ -6,7 +6,7 @@
     <string name="buy_price">Buying Price: $</string>
     <string name="network_error">Ops, Failed to get the prices. Check your internet connection</string>
     <string name="action_refresh">Refresh Prices</string>
-    <string name="current_balance">Current Balance: </string>
+    <string name="current_balance">Current Balance </string>
     <string name="invest">Invest</string>
     <string name="buy">Buy BTC</string>
     <string name="sell">Sell BTC</string>
