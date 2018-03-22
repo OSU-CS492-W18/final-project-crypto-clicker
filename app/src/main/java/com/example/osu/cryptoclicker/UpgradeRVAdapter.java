@@ -3,6 +3,7 @@ package com.example.osu.cryptoclicker;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,7 +17,12 @@ import java.util.ArrayList;
 
 public class UpgradeRVAdapter extends RecyclerView.Adapter<UpgradeRVAdapter.ViewHolder> {
 
-    ArrayList<String> mUpgrades;
+    private ArrayList<String> mUpgrades;
+    private OnUpgradeClickListener mClickListener;
+
+    public interface OnUpgradeClickListener{
+        void onUpgradeClick(String upgrade);
+    }
 
     class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
@@ -40,12 +46,12 @@ public class UpgradeRVAdapter extends RecyclerView.Adapter<UpgradeRVAdapter.View
 
         @Override
         public void onClick(View v) {
-
+            mClickListener.onUpgradeClick(mUpgrades.get(getAdapterPosition()));
         }
     }
 
-    public UpgradeRVAdapter(){
-
+    public UpgradeRVAdapter(OnUpgradeClickListener clickListener){
+        mClickListener = clickListener;
     }
 
     public void updateData(ArrayList<String> data){
