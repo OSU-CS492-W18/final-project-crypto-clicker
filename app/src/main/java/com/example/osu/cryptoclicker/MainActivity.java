@@ -36,6 +36,18 @@ public class MainActivity extends AppCompatActivity {
         mPlayer.updateCurrency();
     }
 
+    private void updateScene(){
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append("USD: ");
+        stringBuilder.append(mPlayer.getCurrency(CoinBaseUtils.COINBASE_CURRENCY_USD));
+        stringBuilder.append("\n\n");
+        stringBuilder.append("Upgrades: ");
+        stringBuilder.append(mPlayer.getUpgrade());
+        stringBuilder.append("\n");
+        //stringBuilder.append("Current Click: ");
+        mTVStatus.setText(stringBuilder.toString());
+    }
+
     public void goUpgrades(View v){
         Intent intent = new Intent(this, UpgradeController.class);
         startActivity(intent);
