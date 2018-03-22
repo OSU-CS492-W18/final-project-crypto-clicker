@@ -52,4 +52,13 @@ public class ClickerDBHelper extends SQLiteOpenHelper {
                         ClickerContract.UserData._ID + " = 1;";
         db.execSQL(SQL_UPDATE);
     }
+
+    //static method to easily update upgrades in the db
+    public static void updateUpgrade(SQLiteDatabase db, int value){
+        final String SQL_UPDATE =
+                "UPDATE " + ClickerContract.UserData.TABLE_NAME + " SET " +
+                        ClickerContract.UserData.COLUMN_UPGRADE + " = " + value + " WHERE " +
+                        ClickerContract.UserData._ID + " = 1;";
+        db.execSQL(SQL_UPDATE);
+    }
 }
