@@ -2,7 +2,6 @@ package com.example.osu.cryptoclicker;
 
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.util.Log;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -17,7 +16,7 @@ public class Player {
 
     private Map<String, Double> currency;
     private int upgrade;
-    private double currClickAmount;
+    private double mClickAmount;
 
     private SQLiteDatabase mDB;
 
@@ -38,7 +37,7 @@ public class Player {
         upgrade = cursor.getInt(0);
         currency.put(CoinBaseUtils.COINBASE_CURRENCY_USD, cursor.getDouble(1));
         currency.put(CoinBaseUtils.COINBASE_CURRENCY_BTC, cursor.getDouble(2));
-        currClickAmount = calcClickAmount();
+        mClickAmount = calcClickAmount();
     }
 
     public double getCurrency(String reqCurrency){
@@ -58,16 +57,20 @@ public class Player {
     public void setUpgrade(int upgrade){
         this.upgrade = upgrade;
         ClickerDBHelper.updateUpgrade(mDB, upgrade);
-        currClickAmount = calcClickAmount();
+        mClickAmount = calcClickAmount();
     }
 
     private double calcClickAmount(){
-        return BASE_CLICK*(1 + upgrade*.5);
+        return BASE_CLICK*(1 + upgrade*(.5+.25*upgrade));
+    }
+
+    public double getClickAmount(){
+        return mClickAmount;
     }
 
     public void click(){
         setCurrency(CoinBaseUtils.COINBASE_CURRENCY_USD,
-                getCurrency(CoinBaseUtils.COINBASE_CURRENCY_USD) + currClickAmount);
+                getCurrency(CoinBaseUtils.COINBASE_CURRENCY_USD) + mClickAmount);
     }
 
     public void updateCurrency()    {
