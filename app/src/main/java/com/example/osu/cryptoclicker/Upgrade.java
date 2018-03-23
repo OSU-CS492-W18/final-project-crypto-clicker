@@ -23,10 +23,12 @@ public class Upgrade {
     private final static String TAG_NAME = "name";
     private final static String TAG_AMOUNT = "amount";
     private final static String TAG_COST = "cost";
+    private final static String TAG_COUNT = "count";
 
     private String mName;
     private double mAmount;
     private double mCost;
+    private int mCount;
 
     public Upgrade(){}
 
@@ -58,6 +60,14 @@ public class Upgrade {
 
     public void setCost(double cost){
         mCost = cost;
+    }
+
+    public int getCount(){
+        return mCount;
+    }
+
+    public void setCount(int count){
+        mCount = count;
     }
 
     public static ArrayList<Upgrade> parseXML(Context context, int resourceID){
@@ -98,6 +108,12 @@ public class Upgrade {
                     case TAG_COST:
                         parser.next();
                         upgrade.setCost(Double.valueOf(parser.getText()));
+                        parser.nextTag();
+                        break;
+
+                    case TAG_COUNT:
+                        parser.next();
+                        upgrade.setCount(Integer.valueOf(parser.getText()));
                         upgradeList.add(upgrade);
                         parser.nextTag();
                         parser.nextTag();
