@@ -34,7 +34,7 @@ public class UpgradeController extends AppCompatActivity implements UpgradeRVAda
         upgradesRV.setAdapter(mUpgradeRVAdapter);
         upgradesRV.setLayoutManager(new LinearLayoutManager(this));
         upgradesRV.setHasFixedSize(true);
-        mUpgradeRVAdapter.updateData(testStrings(10));
+        mUpgradeRVAdapter.updateData(Upgrade.parseXML(this, R.raw.upgrades));
     }
 
     private ArrayList<String> testStrings(int num){
@@ -48,11 +48,11 @@ public class UpgradeController extends AppCompatActivity implements UpgradeRVAda
     }
 
     @Override
-    public void onUpgradeClick(String upgrade) {
-        Log.d(TAG, upgrade);
+    public void onUpgradeClick(Upgrade upgrade) {
+        Log.d(TAG, upgrade.getName());
 
-        if(mPlayer.getUpgrade() + 1 == Integer.valueOf(upgrade)) {
-            mPlayer.setUpgrade(Integer.valueOf(upgrade));
+        if(mPlayer.getUpgrade() + 1 == (upgrade.getCount())) {
+            mPlayer.setUpgrade(upgrade.getCount());
         }
 
         Log.d(TAG, String.valueOf(mPlayer.getUpgrade()));
