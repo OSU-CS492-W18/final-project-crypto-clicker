@@ -7,6 +7,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -48,7 +49,12 @@ public class UpgradeController extends AppCompatActivity implements UpgradeRVAda
     public void onUpgradeClick(Upgrade upgrade) {
         Log.d(TAG, upgrade.getName());
 
-        mPlayer.purchaseUpgrade(upgrade);
+        if(mPlayer.purchaseUpgrade(upgrade)) {
+            Toast.makeText(this, "You got " + upgrade.getName() + " upgrade successfully!", Toast.LENGTH_LONG).show();
+        }
+        else {
+            Toast.makeText(this, "You can't get the " + upgrade.getName() + " upgrade yet!", Toast.LENGTH_LONG).show();
+        }
 
         mTVUSD.setText(TV_USD_PREPEND + String.format("%.2f", mPlayer.getCurrency(CoinBaseUtils.COINBASE_CURRENCY_USD)));
 
