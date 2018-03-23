@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 
@@ -14,6 +15,9 @@ public class UpgradeController extends AppCompatActivity implements UpgradeRVAda
 
     private UpgradeRVAdapter mUpgradeRVAdapter;
     private Player mPlayer;
+
+    private TextView mTVUSD;
+    private final static String TV_USD_PREPEND = "USD: $";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,6 +28,9 @@ public class UpgradeController extends AppCompatActivity implements UpgradeRVAda
         SQLiteDatabase db = dbHelper.getWritableDatabase();
 
         mPlayer = new Player(db);
+
+        mTVUSD = findViewById(R.id.tv_upgrade_usd);
+        mTVUSD.setText(TV_USD_PREPEND + String.format("%.2f", mPlayer.getCurrency(CoinBaseUtils.COINBASE_CURRENCY_USD)));
 
         initUpgradesRV();
     }
@@ -42,6 +49,8 @@ public class UpgradeController extends AppCompatActivity implements UpgradeRVAda
         Log.d(TAG, upgrade.getName());
 
         mPlayer.purchaseUpgrade(upgrade);
+
+        mTVUSD.setText(TV_USD_PREPEND + String.format("%.2f", mPlayer.getCurrency(CoinBaseUtils.COINBASE_CURRENCY_USD)));
 
         Log.d(TAG, String.valueOf(mPlayer.getUpgrade()));
     }
