@@ -1,5 +1,7 @@
 package com.example.osu.cryptoclicker;
 
+import android.content.Context;
+import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -17,14 +19,18 @@ public class UpgradeRVAdapter extends RecyclerView.Adapter<UpgradeRVAdapter.View
 
     private ArrayList<Upgrade> mUpgrades;
     private OnUpgradeClickListener mClickListener;
+    private Context mContext;
+    private int mCurrUpgrade;
 
     public interface OnUpgradeClickListener{
-        void onUpgradeClick(Upgrade upgrade);
+        boolean onUpgradeClick(Upgrade upgrade);
     }
 
     class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
         TextView mTV1, mTV2, mTV3;
+        View mContainer;
+
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -35,6 +41,8 @@ public class UpgradeRVAdapter extends RecyclerView.Adapter<UpgradeRVAdapter.View
 
             mTV1.setOnClickListener(this);
             mTV2.setOnClickListener(this);
+
+            mContainer = itemView;
         }
 
         //parameters need to change
@@ -42,16 +50,25 @@ public class UpgradeRVAdapter extends RecyclerView.Adapter<UpgradeRVAdapter.View
             mTV1.setText(upgrade.getName());
             mTV2.setText("Increase USD per click by " + String.valueOf((int)upgrade.getAmount()) + "%");
             mTV3.setText("$" + String.format("%.2f", upgrade.getCost()));
+
+            if(mCurrUpgrade >= upgrade.getCount()){
+                mContainer.setBackgroundColor(mContext.getResources().getColor(R.color.grey));
+            }
         }
 
         @Override
         public void onClick(View v) {
-            mClickListener.onUpgradeClick(mUpgrades.get(getAdapterPosition()));
+            boolean success = mClickListener.onUpgradeClick(mUpgrades.get(getAdapterPosition()));
+            if(success) {
+                mContainer.setBackgroundColor(mContext.getResources().getColor(R.color.grey));
+            }
         }
     }
 
-    public UpgradeRVAdapter(OnUpgradeClickListener clickListener){
+    public UpgradeRVAdapter(Context context, OnUpgradeClickListener clickListener, int currUpgrade){
         mClickListener = clickListener;
+        mContext = context;
+        mCurrUpgrade = currUpgrade;
     }
 
     public void updateData(ArrayList<Upgrade> data){
