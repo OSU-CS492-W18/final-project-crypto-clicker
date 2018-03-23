@@ -41,9 +41,7 @@ public class UpgradeController extends AppCompatActivity implements UpgradeRVAda
     public void onUpgradeClick(Upgrade upgrade) {
         Log.d(TAG, upgrade.getName());
 
-        if(mPlayer.getUpgrade() + 1 == (upgrade.getCount())) {
-            mPlayer.setUpgrade(upgrade.getCount());
-        }
+        mPlayer.purchaseUpgrade(upgrade);
 
         Log.d(TAG, String.valueOf(mPlayer.getUpgrade()));
     }
