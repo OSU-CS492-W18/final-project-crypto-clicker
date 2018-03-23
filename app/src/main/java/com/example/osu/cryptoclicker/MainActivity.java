@@ -4,12 +4,9 @@ import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-<<<<<<< HEAD
-=======
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
->>>>>>> d99ff617c9b0cb5deec6ae7ac0d6d27860ff073e
 import android.view.View;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
