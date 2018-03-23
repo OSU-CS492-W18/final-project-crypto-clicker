@@ -38,7 +38,7 @@ public class UpgradeController extends AppCompatActivity implements UpgradeRVAda
 
     private void initUpgradesRV(){
         RecyclerView upgradesRV = findViewById(R.id.rv_upgrades);
-        mUpgradeRVAdapter = new UpgradeRVAdapter(this);
+        mUpgradeRVAdapter = new UpgradeRVAdapter(this, this, mPlayer.getUpgrade());
         upgradesRV.setAdapter(mUpgradeRVAdapter);
         upgradesRV.setLayoutManager(new LinearLayoutManager(this));
         upgradesRV.setHasFixedSize(true);
@@ -46,18 +46,24 @@ public class UpgradeController extends AppCompatActivity implements UpgradeRVAda
     }
 
     @Override
-    public void onUpgradeClick(Upgrade upgrade) {
+    public boolean onUpgradeClick(Upgrade upgrade) {
         Log.d(TAG, upgrade.getName());
 
+<<<<<<< HEAD
         if(mPlayer.purchaseUpgrade(upgrade)) {
             Toast.makeText(this, "You got " + upgrade.getName() + " upgrade successfully!", Toast.LENGTH_LONG).show();
         }
         else {
             Toast.makeText(this, "You can't get the " + upgrade.getName() + " upgrade yet!", Toast.LENGTH_LONG).show();
         }
+=======
+        boolean success = mPlayer.purchaseUpgrade(upgrade);
+>>>>>>> fdb916c1246087029c97bf300610a6e713ceaa9c
 
         mTVUSD.setText(TV_USD_PREPEND + String.format("%.2f", mPlayer.getCurrency(CoinBaseUtils.COINBASE_CURRENCY_USD)));
 
         Log.d(TAG, String.valueOf(mPlayer.getUpgrade()));
+
+        return success;
     }
 }
