@@ -40,7 +40,7 @@ public class UpgradeRVAdapter extends RecyclerView.Adapter<UpgradeRVAdapter.View
         //parameters need to change
         public void bind(Upgrade upgrade){
             mTV1.setText(upgrade.getName());
-            mTV2.setText(String.valueOf((int)upgrade.getAmount()) + "%");
+            mTV2.setText("Increase USD per click by " + String.valueOf((int)upgrade.getAmount()) + "%");
             mTV3.setText("$" + String.format("%.2f", upgrade.getCost()));
         }
 
