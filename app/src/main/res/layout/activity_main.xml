@@ -25,6 +25,7 @@
         app:layout_constraintBottom_toTopOf="@id/guideline" />
 
     <ImageView
+        android:id="@+id/iv_upgrade_icon"
         android:layout_width="300dp"
         android:layout_height="300dp"
         android:layout_marginBottom="8dp"
