@@ -10,6 +10,7 @@ with open("upgrade_names.txt", 'r') as f:
 #shuffle name order cause why not
 random.shuffle(names)
 
+num = 1
 amount = 50
 cost = 5.0
 root = ET.Element('upgrades')
@@ -27,6 +28,10 @@ for name in names:
     costTag = ET.SubElement(upgrade, 'cost')
     costTag.text = str(cost)
     cost = cost*(1 + float(amount)/10.0)
+
+    countTag = ET.SubElement(upgrade, 'count')
+    countTag.text = str(num)
+    num += 1
 
 tree = ET.ElementTree(root)
 tree.write("upgrades.xml")
