@@ -17,28 +17,18 @@
         android:id="@+id/tv_status"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:text="Hello World!"
-        android:background="@drawable/tv_border"
+        android:padding="50dp"
+        android:paddingTop="75dp"
+        android:paddingLeft="75dp"
+        android:textSize="16sp"
+        android:textColor="@color/neon_green"
+        android:background="@drawable/terminal2"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/guideline" />
-
-    <ImageView
-        android:id="@+id/iv_upgrade_icon"
-        android:layout_width="300dp"
-        android:layout_height="300dp"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:src="@drawable/one_coin"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.507"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.227" />
+        app:layout_constraintBottom_toTopOf="@id/guideline"
+        app:layout_constraintDimensionRatio="1:1"/>
+    
 
     <Button
         android:id="@+id/bt_intent_upgrade"
