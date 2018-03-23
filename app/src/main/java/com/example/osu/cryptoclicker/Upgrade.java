@@ -15,4 +15,16 @@ public class Upgrade {
         mAmount = amount;
         mCost = cost;
     }
+
+    public String getName(){
+        return mName;
+    }
+
+    public double getAmount(){
+        return mAmount;
+    }
+
+    public double getCost(){
+        return mCost;
+    }
 }
