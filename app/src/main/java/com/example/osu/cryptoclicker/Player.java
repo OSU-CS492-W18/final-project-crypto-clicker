@@ -87,7 +87,23 @@ public class Player {
         while (cursor.moveToNext()) {
             currency.put(CoinBaseUtils.COINBASE_CURRENCY_USD, cursor.getDouble(cursor.getColumnIndex(ClickerContract.UserData.COLUMN_USD)));
             currency.put(CoinBaseUtils.COINBASE_CURRENCY_BTC, cursor.getDouble(cursor.getColumnIndex(ClickerContract.UserData.COLUMN_BITCOIN)));
+            upgrade = cursor.getInt(cursor.getColumnIndex(ClickerContract.UserData.COLUMN_UPGRADE));
         }
         cursor.close();
+
+        mClickAmount = calcClickAmount();
+    }
+
+    public boolean purchaseUpgrade(Upgrade upgrade){
+         boolean success = false;
+
+         if(upgrade.getCost() <= currency.get(CoinBaseUtils.COINBASE_CURRENCY_USD) && upgrade.getCount() == this.upgrade+1){
+             setCurrency(CoinBaseUtils.COINBASE_CURRENCY_USD, getCurrency(CoinBaseUtils.COINBASE_CURRENCY_USD) - upgrade.getCost());
+             setUpgrade(this.upgrade + 1);
+
+             success = true;
+         }
+
+         return success;
     }
 }
