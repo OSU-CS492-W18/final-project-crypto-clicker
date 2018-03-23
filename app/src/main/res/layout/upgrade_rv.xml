@@ -2,24 +2,31 @@
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:paddingBottom="25dp"
+    android:paddingLeft="10dp"
+    android:paddingRight="10dp">
 
     <android.support.constraint.Guideline
         android:id="@+id/upgrade_guideline_center_vert"
         android:layout_width="1dp"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintGuide_percent=".60"/>
+        app:layout_constraintGuide_percent=".75"/>
 
     <TextView
         android:id="@+id/tv_upgrade_rv1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:theme="@style/UpgradeTitle"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="@id/upgrade_guideline_center_vert"/>
 
     <TextView
         android:id="@+id/tv_upgrade_rv2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:theme="@style/upgradeDetail"
         app:layout_constraintTop_toBottomOf="@id/tv_upgrade_rv1"
         app:layout_constraintLeft_toRightOf="parent"/>
 
@@ -27,7 +34,8 @@
         android:id="@+id/tv_upgrade_rv3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:theme="@style/upgradeDetail"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintLeft_toRightOf="@id/upgrade_guideline_center_vert"/>
+        app:layout_constraintRight_toRightOf="parent"/>
 
 </android.support.constraint.ConstraintLayout>
