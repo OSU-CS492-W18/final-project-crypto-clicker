@@ -28,12 +28,26 @@ public class MainActivity extends AppCompatActivity {
         mDB = dbHelper.getWritableDatabase();
 
         mPlayer = new Player(mDB);
+
+        updateScene();
     }
 
     @Override
     protected void onResume()  {
         super.onResume();
         mPlayer.updateCurrency();
+    }
+
+    private void updateScene(){
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append("USD: ");
+        stringBuilder.append(mPlayer.getCurrency(CoinBaseUtils.COINBASE_CURRENCY_USD));
+        stringBuilder.append("\n\n");
+        stringBuilder.append("Upgrades: ");
+        stringBuilder.append(mPlayer.getUpgrade());
+        stringBuilder.append("\n");
+        //stringBuilder.append("Current Click: ");
+        mTVStatus.setText(stringBuilder.toString());
     }
 
     public void goUpgrades(View v){
@@ -51,9 +65,7 @@ public class MainActivity extends AppCompatActivity {
         public void onClick(View v) {
             mPlayer.click();
 
-            String text = CoinBaseUtils.COINBASE_CURRENCY_USD + ": " +
-                    String.valueOf(mPlayer.getCurrency(CoinBaseUtils.COINBASE_CURRENCY_USD));
-            mTVStatus.setText(text);
+            updateScene();
         }
     };
 }

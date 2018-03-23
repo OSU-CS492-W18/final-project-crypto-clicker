@@ -57,6 +57,7 @@ public class Player {
 
     public void setUpgrade(int upgrade){
         this.upgrade = upgrade;
+        ClickerDBHelper.updateUpgrade(mDB, upgrade);
         currClickAmount = calcClickAmount();
     }
 
