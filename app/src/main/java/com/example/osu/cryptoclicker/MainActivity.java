@@ -5,6 +5,8 @@ import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
@@ -70,4 +72,35 @@ public class MainActivity extends AppCompatActivity {
             updateScene();
         }
     };
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu)   {
+        getMenuInflater().inflate(R.menu.main_activity_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item)  {
+        switch (item.getItemId())   {
+            case R.id.share_upgrade_menu:
+                shareUpgrade();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    private void shareUpgrade() {
+
+        String message = String.format("Hey, check out my new balance in CryptoClicker," +
+                " now I got $%.2f and %.7f BTC!!",
+                mPlayer.getCurrency(CoinBaseUtils.COINBASE_CURRENCY_USD),
+                mPlayer.getCurrency(CoinBaseUtils.COINBASE_CURRENCY_BTC));
+
+        Intent sendIntent = new Intent();
+        sendIntent.setAction(Intent.ACTION_SEND);
+        sendIntent.putExtra(Intent.EXTRA_TEXT, message);
+        sendIntent.setType("text/plain");
+        startActivity(sendIntent);
+    }
 }
