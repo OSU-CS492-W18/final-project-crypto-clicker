@@ -17,11 +17,11 @@ import java.util.ArrayList;
 
 public class UpgradeRVAdapter extends RecyclerView.Adapter<UpgradeRVAdapter.ViewHolder> {
 
-    private ArrayList<String> mUpgrades;
+    private ArrayList<Upgrade> mUpgrades;
     private OnUpgradeClickListener mClickListener;
 
     public interface OnUpgradeClickListener{
-        void onUpgradeClick(String upgrade);
+        void onUpgradeClick(Upgrade upgrade);
     }
 
     class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
@@ -39,8 +39,11 @@ public class UpgradeRVAdapter extends RecyclerView.Adapter<UpgradeRVAdapter.View
         }
 
         //parameters need to change
-        public void bind(String upgradeLeft){
-            mTVLeft.setText(upgradeLeft);
+        public void bind(Upgrade upgrade){
+            final String displayText = upgrade.getName() + "\n" +
+                    upgrade.getAmount() + "%\t\t$" + upgrade.getCost();
+            mTVLeft.setText(displayText);
+            mTVRight.setText(String.valueOf(upgrade.getCount()));
             //mTVRight.setText(upgradeRight);
         }
 
@@ -54,7 +57,7 @@ public class UpgradeRVAdapter extends RecyclerView.Adapter<UpgradeRVAdapter.View
         mClickListener = clickListener;
     }
 
-    public void updateData(ArrayList<String> data){
+    public void updateData(ArrayList<Upgrade> data){
         mUpgrades = data;
         notifyDataSetChanged();
     }
