@@ -4,9 +4,12 @@ import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
 import android.widget.TextView;
+
+import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
     private final static String TAG = "MainActivity";
@@ -14,7 +17,12 @@ public class MainActivity extends AppCompatActivity {
     private SQLiteDatabase mDB;
     private Player mPlayer;
 
-    private TextView mTVStatus;
+    private TextView mTVStatus, mTVOnClick;
+
+    private int mClickCounter = 0;
+    private Animation mClickAnimation;
+
+    private ArrayList<Upgrade> upgradeList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,12 +32,18 @@ public class MainActivity extends AppCompatActivity {
         mTVStatus = findViewById(R.id.tv_status);
         mTVStatus.setOnClickListener(mSceneClickListener);
 
+        mTVOnClick = findViewById(R.id.tv_click_count);
+
         ClickerDBHelper dbHelper = new ClickerDBHelper(this);
         mDB = dbHelper.getWritableDatabase();
 
         mPlayer = new Player(mDB);
 
+        upgradeList = Upgrade.parseXML(this, R.raw.upgrades);
+
         updateScene();
+
+        initClickAnimation();
     }
 
     @Override
@@ -41,15 +55,52 @@ public class MainActivity extends AppCompatActivity {
 
     private void updateScene(){
         StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append("USD: ");
-        stringBuilder.append(mPlayer.getCurrency(CoinBaseUtils.COINBASE_CURRENCY_USD));
+        stringBuilder.append("$");
+        stringBuilder.append(String.format("%.2f", mPlayer.getCurrency(CoinBaseUtils.COINBASE_CURRENCY_USD)));
+        stringBuilder.append("\n\nBitcoin: ");
+        stringBuilder.append(String.format("%.15f", mPlayer.getCurrency(CoinBaseUtils.COINBASE_CURRENCY_BTC)));
         stringBuilder.append("\n\n");
-        stringBuilder.append("Upgrades: ");
+        stringBuilder.append("Upgrades purchased: ");
         stringBuilder.append(mPlayer.getUpgrade());
         stringBuilder.append("\n");
-        stringBuilder.append("Current Click: ");
-        stringBuilder.append(mPlayer.getClickAmount());
         mTVStatus.setText(stringBuilder.toString());
+    }
+
+    private void initClickAnimation(){
+        mClickAnimation = new AlphaAnimation(1.0f, 0.0f);
+        mClickAnimation.setDuration(3000);
+        mClickAnimation.setRepeatCount(0);
+        mClickAnimation.setStartOffset(1000);
+        mClickAnimation.setRepeatMode(Animation.REVERSE);
+        mClickAnimation.setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation animation) {
+                //do nothing
+            }
+
+            @Override
+            public void onAnimationEnd(Animation animation) {
+                mClickCounter = 0;
+                mTVOnClick.setVisibility(View.INVISIBLE);
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+                // do nothing
+            }
+        });
+    }
+
+    private void updateAnimation(){
+        String clickText = "+" + mPlayer.getClickAmount();
+
+        if(mClickCounter != 0){
+            clickText += " X " + (mClickCounter+1);
+        }
+
+        mTVOnClick.setText(clickText);
+        mTVOnClick.setVisibility(View.VISIBLE);
+        mTVOnClick.startAnimation(mClickAnimation);
     }
 
     public void goUpgrades(View v){
@@ -65,6 +116,9 @@ public class MainActivity extends AppCompatActivity {
     private View.OnClickListener mSceneClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
+            updateAnimation();
+            mClickCounter++;
+
             mPlayer.click();
 
             updateScene();
