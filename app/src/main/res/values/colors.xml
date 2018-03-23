@@ -2,6 +2,7 @@
 <resources>
     <color name="colorPrimary">#665E53</color>
     <color name="colorPrimaryDark">#665E53</color>
-    <color name="colorAccent">#FF4081</color>
+    <color name="colorAccent">#754400</color>
     <color name="backgroundColor">#CDBDA7</color>
+    <color name="takenUpgrade">#5c564e</color>
 </resources>

@@ -51,7 +51,7 @@ public class UpgradeRVAdapter extends RecyclerView.Adapter<UpgradeRVAdapter.View
             mTV3.setText("$" + String.format("%.2f", upgrade.getCost()));
 
             if(mCurrUpgrade >= upgrade.getCount()){
-                mContainer.setBackgroundColor(mContext.getResources().getColor(R.color.grey));
+                mContainer.setBackgroundColor(mContext.getResources().getColor(R.color.takenUpgrade));
             }
         }
 
