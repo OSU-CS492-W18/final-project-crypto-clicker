@@ -9,7 +9,7 @@
         android:layout_width="1dp"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintGuide_percent=".50"/>
+        app:layout_constraintGuide_percent=".60"/>
 
     <TextView
         android:id="@+id/tv_upgrade_rv1"
@@ -27,7 +27,7 @@
         android:id="@+id/tv_upgrade_rv3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/tv_upgrade_rv1"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintLeft_toRightOf="@id/upgrade_guideline_center_vert"/>
 
 </android.support.constraint.ConstraintLayout>
