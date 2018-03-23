@@ -35,7 +35,8 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume()  {
         super.onResume();
-        mPlayer.updateCurrency();
+        mPlayer.updateFromDB();
+        updateScene();
     }
 
     private void updateScene(){
@@ -46,7 +47,8 @@ public class MainActivity extends AppCompatActivity {
         stringBuilder.append("Upgrades: ");
         stringBuilder.append(mPlayer.getUpgrade());
         stringBuilder.append("\n");
-        //stringBuilder.append("Current Click: ");
+        stringBuilder.append("Current Click: ");
+        stringBuilder.append(mPlayer.getClickAmount());
         mTVStatus.setText(stringBuilder.toString());
     }
 
