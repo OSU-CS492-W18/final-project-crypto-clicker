@@ -73,7 +73,7 @@ public class Player {
                 getCurrency(CoinBaseUtils.COINBASE_CURRENCY_USD) + mClickAmount);
     }
 
-    public void updateCurrency()    {
+    public void updateFromDB()    {
         Cursor cursor = mDB.query(
                 ClickerContract.UserData.TABLE_NAME,
                 null,
