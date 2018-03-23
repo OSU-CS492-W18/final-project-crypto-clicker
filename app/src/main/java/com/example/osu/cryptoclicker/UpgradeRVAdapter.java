@@ -1,9 +1,7 @@
 package com.example.osu.cryptoclicker;
 
-import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,25 +24,24 @@ public class UpgradeRVAdapter extends RecyclerView.Adapter<UpgradeRVAdapter.View
 
     class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
-        TextView mTVLeft, mTVRight;
+        TextView mTV1, mTV2, mTV3;
 
         public ViewHolder(View itemView) {
             super(itemView);
 
-            mTVLeft = itemView.findViewById(R.id.tv_upgrade_rv1);
-            mTVRight = itemView.findViewById(R.id.tv_upgrade_rv2);
+            mTV1 = itemView.findViewById(R.id.tv_upgrade_rv1);
+            mTV2 = itemView.findViewById(R.id.tv_upgrade_rv2);
+            mTV3 = itemView.findViewById(R.id.tv_upgrade_rv3);
 
-            mTVLeft.setOnClickListener(this);
-            mTVRight.setOnClickListener(this);
+            mTV1.setOnClickListener(this);
+            mTV2.setOnClickListener(this);
         }
 
         //parameters need to change
         public void bind(Upgrade upgrade){
-            final String displayText = upgrade.getName() + "\n" +
-                    upgrade.getAmount() + "%\t\t$" + upgrade.getCost();
-            mTVLeft.setText(displayText);
-            mTVRight.setText(String.valueOf(upgrade.getCount()));
-            //mTVRight.setText(upgradeRight);
+            mTV1.setText(upgrade.getName());
+            mTV2.setText(String.valueOf((int)upgrade.getAmount()) + "%");
+            mTV3.setText("$" + String.valueOf(upgrade.getCost()));
         }
 
         @Override
