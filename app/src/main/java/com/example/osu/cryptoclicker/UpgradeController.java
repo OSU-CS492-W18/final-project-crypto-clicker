@@ -37,16 +37,6 @@ public class UpgradeController extends AppCompatActivity implements UpgradeRVAda
         mUpgradeRVAdapter.updateData(Upgrade.parseXML(this, R.raw.upgrades));
     }
 
-    private ArrayList<String> testStrings(int num){
-        ArrayList<String> ret = new ArrayList<>();
-
-        for(int i=1; i<=num; i++){
-            ret.add(String.valueOf(i));
-        }
-
-        return ret;
-    }
-
     @Override
     public void onUpgradeClick(Upgrade upgrade) {
         Log.d(TAG, upgrade.getName());
