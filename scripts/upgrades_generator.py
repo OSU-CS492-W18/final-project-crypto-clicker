@@ -27,7 +27,7 @@ for name in names:
 
     costTag = ET.SubElement(upgrade, 'cost')
     costTag.text = str(cost)
-    cost = cost*(1 + float(amount)/10.0)
+    cost = cost*(1 + float(amount)/100.0)
 
     countTag = ET.SubElement(upgrade, 'count')
     countTag.text = str(num)
